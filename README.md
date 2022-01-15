@@ -1,9 +1,23 @@
-# convert-source-map [![build status](https://secure.travis-ci.org/thlorenz/convert-source-map.svg?branch=master)](http://travis-ci.org/thlorenz/convert-source-map)
+# @prantlf/convert-source-map
 
-Converts a source-map from/to  different formats and allows adding/changing properties.
+[![Latest version](https://img.shields.io/npm/v/@prantlf/convert-source-map)
+ ![Dependency status](https://img.shields.io/librariesio/release/npm/@prantlf/convert-source-map)
+](https://www.npmjs.com/package/convert-source-map)
+
+Converts a source-map from/to different formats and allows adding/changing properties.
+
+Changes made in this fork:
+
+* Remove all Node.js and NPM dependencies to allow usage in a web browser.
+* Support uri encoded source maps to fully comply with [RFC 2397].
+* Let a synchronous or asynchronous function for reading the source map be specified by the caller.
+
+Methods `fromMapFileComment` and `fromMapFileSource` have an additional required parameter, otherwise the API and minium requirements are the same as for the original package.
+
+## Synopsis
 
 ```js
-var convert = require('convert-source-map');
+var convert = require('@prantlf/convert-source-map');
 
 var json = convert
   .fromComment('//# sourceMappingURL=data:application/json;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiYnVpbGQvZm9vLm1pbi5qcyIsInNvdXJjZXMiOlsic3JjL2Zvby5qcyJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSIsInNvdXJjZVJvb3QiOiIvIn0=')
@@ -21,6 +35,16 @@ console.log(modified);
 ```json
 {"version":3,"file":"build/foo.min.js","sources":["src/foo.js"],"names":[],"mappings":"AAAA","sourceRoot":"/"}
 {"version":3,"file":"build/foo.min.js","sources":["SRC/FOO.JS"],"names":[],"mappings":"AAAA","sourceRoot":"/"}
+```
+
+## Installation
+
+This module can be installed in your project using [NPM], [PNPM] or [Yarn]. Make sure, that you use [Node.js] version 0.10 or newer.
+
+```sh
+npm i @prantlf/convert-source-map
+pnpm i @prantlf/convert-source-map
+yarn add @prantlf/convert-source-map
 ```
 
 ## API
@@ -57,7 +81,7 @@ generated file, i.e. the one containing the source map.
 For example, a synchronous way in Node.js:
 
 ```js
-var convert = require('convert-source-map');
+var convert = require('@prantlf/convert-source-map');
 var fs = require('fs');
 
 function readMap(filepath) {
@@ -74,7 +98,7 @@ console.log(json);
 For example, an asynchronous way in Node.js:
 
 ```js
-var convert = require('convert-source-map');
+var convert = require('@prantlf/convert-source-map');
 var fs = require('fs');
 
 function readMap(filepath) {
@@ -89,7 +113,7 @@ console.log(json);
 For example, an asynchronous way in the browser:
 
 ```js
-var convert = require('convert-source-map');
+var convert = require('@prantlf/convert-source-map');
 
 function readMap(url) {
   return new Promise(function (resolve, reject) {
@@ -200,3 +224,20 @@ Returns a comment that links to an external source map via `file`.
 By default, the comment is formatted like: `//# sourceMappingURL=...`, which you would normally see in a JS source file.
 
 When `options.multiline == true`, the comment is formatted like: `/*# sourceMappingURL=... */`, which you would find in a CSS source file.
+
+## Contributing
+
+In lieu of a formal styleguide, take care to maintain the existing coding style. Lint and test your code.
+
+## License
+
+Copyright (c) 2013-2021 Thorsten Lorenz<br>
+Copyright (c) 2022 Ferdinand Prantl
+
+Licensed under the MIT license.
+
+[Node.js]: http://nodejs.org/
+[NPM]: https://www.npmjs.com/
+[PNPM]: https://pnpm.io/
+[Yarn]: https://yarnpkg.com/
+[RFC 2397]: https://www.google.com/search?client=firefox-b-d&q=RFC+2397
