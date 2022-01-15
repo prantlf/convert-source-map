@@ -99,7 +99,7 @@ For example, an asynchronous way in Node.js:
 
 ```js
 var convert = require('@prantlf/convert-source-map');
-var fs = require('fs');
+var fs = require('fs/promises');
 
 function readMap(filepath) {
   return fs.readFile(filepath, 'utf8');
