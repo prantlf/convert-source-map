@@ -1,3 +1,5 @@
+/* global Buffer */
+
 'use strict';
 
 Object.defineProperty(exports, 'commentRegex', {
@@ -23,9 +25,11 @@ Object.defineProperty(exports, 'commentRegex3', {
 Object.defineProperty(exports, 'mapFileCommentRegex', {
   get: function getMapFileCommentRegex () {
     // Matches sourceMappingURL in either // or /* comment styles.
-    return /(?:\/\/[@#][ \t]+sourceMappingURL=([^\s'"`]+?)[ \t]*$)|(?:\/\*[@#][ \t]+sourceMappingURL=([^\*]+?)[ \t]*(?:\*\/){1}[ \t]*$)/mg;
+    return /(?:\/\/[@#][ \t]+sourceMappingURL=([^\s'"`]+?)[ \t]*$)|(?:\/\*[@#][ \t]+sourceMappingURL=([^*]+?)[ \t]*(?:\*\/){1}[ \t]*$)/mg;
   }
 });
+
+var hasOwnProp = Object.prototype.hasOwnProperty;
 
 var decodeBase64 = typeof Buffer !== 'undefined' ? Buffer.from ?
   function decodeBase64(base64) {
@@ -46,7 +50,7 @@ function readFromFileMap(sm, dir, readMap) {
   var r = exports.mapFileCommentRegex.exec(sm);
   // for some odd reason //# .. captures in 1 and /* .. */ in 2
   var filename = r[1] || r[2];
-  var filepath, sm;
+  var filepath;
 
   if (dir.endsWith('/')) dir = dir.substring(0, dir.length - 1);
   if (filename.startsWith('/')) filename = filename.substring(1);
@@ -117,7 +121,7 @@ Converter.prototype.toObject = function () {
 };
 
 Converter.prototype.addProperty = function (key, value) {
-  if (this.sourcemap.hasOwnProperty(key)) throw new Error('property "' + key + '" already exists on the sourcemap, use set property instead');
+  if (hasOwnProp.call(this.sourcemap, key)) throw new Error('property "' + key + '" already exists on the sourcemap, use set property instead');
   return this.setProperty(key, value);
 };
 
