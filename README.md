@@ -2,7 +2,7 @@
 
 [![Latest version](https://img.shields.io/npm/v/@prantlf/convert-source-map)
  ![Dependency status](https://img.shields.io/librariesio/release/npm/@prantlf/convert-source-map)
-](https://www.npmjs.com/package/convert-source-map)
+](https://www.npmjs.com/package/@prantlf/convert-source-map)
 
 Converts a source-map from/to different formats and allows adding/changing properties.
 
