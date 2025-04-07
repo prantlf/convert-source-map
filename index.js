@@ -45,7 +45,7 @@ var decodeBase64 = typeof Buffer !== 'undefined' ? Buffer.from ?
   };
 
 function stripComment(sm) {
-  return sm.split(',').pop();
+  return sm.substring(sm.indexOf(',') + 1);
 }
 
 function readFromFileMap(sm, dir, readMap) {
