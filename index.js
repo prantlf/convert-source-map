@@ -34,10 +34,12 @@ var hasOwnProp = Object.prototype.hasOwnProperty;
 var decodeBase64 = typeof Buffer !== 'undefined' ? Buffer.from ?
   function decodeBase64(base64) {
     return Buffer.from(base64, 'base64').toString();
+  /* c8 ignore next 4 (old node) */
   } :
   function decodeBase64(base64) {
     return new Buffer(base64, 'base64').toString();
   } :
+  /* c8 ignore next 3 (browser) */
   function decodeBase64(base64) {
     return decodeURIComponent(escape(atob(base64)));
   };
@@ -52,6 +54,7 @@ function readFromFileMap(sm, dir, readMap) {
   var filename = r[1] || r[2];
   var filepath;
 
+  /* c8 ignore next 2 (incomplete test) */
   if (dir.endsWith('/')) dir = dir.substring(0, dir.length - 1);
   if (filename.startsWith('/')) filename = filename.substring(1);
   filepath = dir + '/' + filename;
@@ -59,6 +62,7 @@ function readFromFileMap(sm, dir, readMap) {
   try {
     sm = readMap(filepath);
     return typeof sm === 'string' ? sm : sm.then(undefined, throwError);
+  /* c8 ignore next 7 (missing test) */
   } catch (e) {
     throwError(e);
   }
@@ -92,11 +96,13 @@ Converter.prototype.toBase64 = typeof Buffer !== 'undefined' ? Buffer.from ?
   function () {
     var json = this.toJSON();
     return Buffer.from(json, 'utf8').toString('base64');
+  /* c8 ignore next 5 (old node) */
   } :
   function () {
     var json = this.toJSON();
     return new Buffer(json, 'utf8').toString('base64');
   } :
+  /* c8 ignore next 4 (browser) */
   function () {
     var json = this.toJSON();
     return btoa(unescape(encodeURIComponent(json)));
@@ -178,6 +184,7 @@ exports.fromSource = function (content) {
 // Finds last sourcemap comment in file or returns null if none was found
 exports.fromMapFileSource = function (content, dir, readMap) {
   var m = content.match(exports.mapFileCommentRegex);
+  /* c8 ignore next (incomplete tests) */
   return m ? exports.fromMapFileComment(m.pop(), dir, readMap) : null;
 };
 

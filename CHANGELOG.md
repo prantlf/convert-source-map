@@ -1,4 +1,6 @@
-# [2.0.0](https://github.com/prantlf/convert-source-map/compare/v1.8.0...v2.0.0) (2022-01-15)
+# Changes
+
+## [2.0.0](https://github.com/prantlf/convert-source-map/compare/v1.8.0...v2.0.0) (2022-01-15)
 
 ### Bug Fixes
 

@@ -1,6 +1,6 @@
 .DS_Story
 
-.nyc_output
+.tap
 coverage
 lib-cov
 *.seed

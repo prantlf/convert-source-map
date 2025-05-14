@@ -4,8 +4,9 @@
   "description": "Converts a source-map from/to different formats and allows adding/changing properties.",
   "main": "index.js",
   "scripts": {
+    "preprepare": "tap plugin add @tapjs/synonyms",
     "lint": "eslint index.js",
-    "check": "tap test/*.js --color --no-coverage",
+    "check": "tap test/*.js --color -- --no-coverage",
     "test": "npm run lint && npm run check"
   },
   "repository": {
@@ -17,26 +18,12 @@
     "url": "https://github.com/prantlf/convert-source-map/issues"
   },
   "devDependencies": {
-    "@semantic-release/changelog": "^6.0.3",
-    "@semantic-release/git": "^10.0.1",
-    "eslint": "^8.40.0",
-    "inline-source-map": "^0.6.2",
-    "tap": "^16.3.4"
-  },
-  "release": {
-    "plugins": [
-      "@semantic-release/commit-analyzer",
-      "@semantic-release/release-notes-generator",
-      "@semantic-release/changelog",
-      "@semantic-release/npm",
-      [
-        "@semantic-release/github",
-        {
-          "failComment": false
-        }
-      ],
-      "@semantic-release/git"
-    ]
+    "@eslint/js": "^9.26.0",
+    "@tapjs/synonyms": "^4.0.1",
+    "eslint": "^9.26.0",
+    "globals": "^16.1.0",
+    "inline-source-map": "^0.6.3",
+    "tap": "^21.1.0"
   },
   "keywords": [
     "convert",
@@ -70,5 +57,10 @@
   },
   "files": [
     "index.js"
-  ]
+  ],
+  "tap": {
+    "plugin": [
+      "@tapjs/synonyms"
+    ]
+  }
 }
