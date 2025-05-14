@@ -1,5 +1,11 @@
 # Changes
 
+## [2.1.0](https://github.com/prantlf/convert-source-map/compare/v2.0.0...v2.1.0) (2025-05-14)
+
+### Features
+
+* Upgrade dependencies ([ae07940](https://github.com/prantlf/convert-source-map/commit/ae07940713eeb689c604d2ef3f817b7187e4a1de))
+
 ## [2.0.0](https://github.com/prantlf/convert-source-map/compare/v1.8.0...v2.0.0) (2022-01-15)
 
 ### Bug Fixes
