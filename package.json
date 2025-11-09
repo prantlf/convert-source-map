@@ -31,11 +31,13 @@
   ],
   "main": "lib/index.cjs",
   "module": "lib/index.mjs",
-  "browser": "lib/index.umd.js",
+  "types": "lib/index.d.ts",
+  "browser": "lib/index.umd.min.js",
   "exports": {
     ".": {
       "import": "./lib/index.mjs",
-      "require": "./lib/index.cjs"
+      "require": "./lib/index.cjs",
+      "types": "./lib/index.d.ts"
     }
   },
   "engine": {

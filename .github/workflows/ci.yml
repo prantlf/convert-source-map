@@ -34,6 +34,7 @@ jobs:
     - run: npm test
     - uses: prantlf/publish-release-action@v1
       with:
+        no-npm-auth: true
         no-archives: true
         branches: combined
       env:
