@@ -1,5 +1,11 @@
 # Changes
 
+## [3.0.1](https://github.com/prantlf/convert-source-map/compare/v3.0.0...v3.0.1) (2025-11-09)
+
+### Bug Fixes
+
+* Add default export to ESM output - object with all functions ([85e3442](https://github.com/prantlf/convert-source-map/commit/85e34425ddc6939b70b50e06a73372561076ffc9))
+
 ## [3.0.0](https://github.com/prantlf/convert-source-map/compare/v2.1.0...v3.0.0) (2025-11-09)
 
 ### Features
