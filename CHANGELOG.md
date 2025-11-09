@@ -1,5 +1,19 @@
 # Changes
 
+## [3.0.0](https://github.com/prantlf/convert-source-map/compare/v2.1.0...v3.0.0) (2025-11-09)
+
+### Features
+
+* Add ESM and UMD module export formats and TypeScript types ([590c3bd](https://github.com/prantlf/convert-source-map/commit/590c3bdf68a0ee3e0e4915678bf7046c8a20b452))
+
+### Bug Fixes
+
+* Fix stripComment for when data uri contains commas ([8ce44d6](https://github.com/prantlf/convert-source-map/commit/8ce44d67fe615c897f5e1e15e46fb8bc879a00eb))
+
+### BREAKING CHANGES
+
+Properties `commentRegex`, `commentRegex2`, `commentRegex3` and `mapFileCommentRegex` were converted to functions `getCommentRegex`, `getCommentRegex2`, `getCommentRegex3` and `getMapFileCommentRegex`. This was needed for adding the ESM export format, whcih doesn't allow exporting properties with getters.
+
 ## [2.1.0](https://github.com/prantlf/convert-source-map/compare/v2.0.0...v2.1.0) (2025-05-14)
 
 ### Features

@@ -1,6 +1,6 @@
 {
   "name": "@prantlf/convert-source-map",
-  "version": "2.1.0",
+  "version": "3.0.0",
   "description": "Converts a source-map from/to different formats and allows adding/changing properties.",
   "repository": {
     "type": "git",
