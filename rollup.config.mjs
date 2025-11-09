@@ -7,23 +7,27 @@ export default {
     {
       file: 'lib/index.cjs',
       format: 'cjs',
-      sourcemap: true
+      sourcemap: true,
+      exports: 'named'
     },
     {
       file: 'lib/index.mjs',
-      sourcemap: true
+      sourcemap: true,
+      exports: 'named'
     },
     {
       file: 'lib/index.umd.js',
       format: 'umd',
       name: 'convertSourceMap',
-      sourcemap: true
+      sourcemap: true,
+      exports: 'named'
     },
     {
       file: 'lib/index.umd.min.js',
       format: 'umd',
       name: 'convertSourceMap',
       sourcemap: true,
+      exports: 'named',
       plugins: [minify()]
     }
   ],

@@ -4,6 +4,7 @@ import {
   getCommentRegex2, getCommentRegex3, getMapFileCommentRegex, removeComments,
   removeMapFileComments
 } from '../lib/index.mjs'
+import { default as convert } from '../lib/index.mjs'
 
 let _c = fromBase64('e30=')
 _c = fromComment('//#sourceMappingURL=data:application/json,{}')
@@ -38,3 +39,15 @@ _s = _c.toJSON()
 _s = _c.toJSON('')
 _s = _c.toURI()
 let _o = _c.toObject()
+
+const functions = [
+  'fromBase64', 'fromComment', 'fromJSON', 'fromMapFileComment', 'fromMapFileSource',
+  'fromObject', 'fromSource', 'fromURI', 'generateMapFileComment', 'getCommentRegex',
+  'getCommentRegex2', 'getCommentRegex3', 'getMapFileCommentRegex', 'removeComments',
+  'removeMapFileComments'
+]
+for (const func of functions) {
+  if (!(func in convert)) {
+    throw new Error(`Missing export: ${func}`)
+  }
+}
