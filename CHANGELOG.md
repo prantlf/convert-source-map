@@ -1,5 +1,11 @@
 # Changes
 
+## [3.0.2](https://github.com/prantlf/convert-source-map/compare/v3.0.1...v3.0.2) (2025-11-09)
+
+### Bug Fixes
+
+* Add TypeScript types to package.json ([2218051](https://github.com/prantlf/convert-source-map/commit/2218051bdea6c7cc3eb02fceec745ae6c11e09a8))
+
 ## [3.0.1](https://github.com/prantlf/convert-source-map/compare/v3.0.0...v3.0.1) (2025-11-09)
 
 ### Bug Fixes
