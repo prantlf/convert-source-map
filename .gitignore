@@ -15,6 +15,12 @@ pids
 logs
 results
 
+lib/*.cjs
+lib/*.mjs
+lib/*.min.js
+lib/*.umd.js
+lib/*.map
+
 node_modules
 npm-debug.log
 tmp

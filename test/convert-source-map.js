@@ -1,15 +1,10 @@
-'use strict';
-/*jshint asi: true */
+'use strict'
 
 var test = require('tap').test
   , generator = require('inline-source-map')
   , convert = require('..')
-  , decodeBase64 = typeof Buffer.from ?
-    function decodeBase64(base64) {
-      return Buffer.from(base64, 'base64').toString();
-    } :
-    function decodeBase64(base64) {
-      return new Buffer(base64, 'base64').toString();
+  , decodeBase64 = function decodeBase64(base64) {
+      return Buffer.from(base64, 'base64').toString()
     }
 
 var gen = generator({charset:"utf-8"})
@@ -51,22 +46,22 @@ test('different formats', function (t) {
 test('to object returns a copy', function (t) {
   var c = convert.fromJSON(json)
   var o = c.toObject()
-  o.version = '99';
+  o.version = '99'
   t.equal(c.toObject().version, 3, 'setting property on returned object does not affect original')
   t.end()
 })
 
 test('to multi-line map', function (t) {
-  var c = convert.fromObject(obj);
-  var s = c.toComment({ multiline: true });
-  t.similar(s, /^\/\*# sourceMappingURL=.+ \*\/$/);
-  t.end();
+  var c = convert.fromObject(obj)
+  var s = c.toComment({ multiline: true })
+  t.similar(s, /^\/\*# sourceMappingURL=.+ \*\/$/)
+  t.end()
 })
 
 test('to map file comment', function (t) {
-  t.equal(convert.generateMapFileComment('index.js.map'), '//# sourceMappingURL=index.js.map');
-  t.equal(convert.generateMapFileComment('index.css.map', { multiline: true }), '/*# sourceMappingURL=index.css.map */');
-  t.end();
+  t.equal(convert.generateMapFileComment('index.js.map'), '//# sourceMappingURL=index.js.map')
+  t.equal(convert.generateMapFileComment('index.css.map', { multiline: true }), '/*# sourceMappingURL=index.css.map */')
+  t.end()
 })
 
 test('from source', function (t) {
@@ -83,8 +78,8 @@ test('from source', function (t) {
   , otherMap = '//# sourceMappingURL=data:application/json;charset=utf-8;base64,otherZXJzaW9uIjozLCJmaWxlIjoiIiwic291cmNlcyI6WyJmdW5jdGlvbiBmb28oKSB7XG4gY29uc29sZS5sb2coXCJoZWxsbyBJIGFtIGZvb1wiKTtcbiBjb25zb2xlLmxvZyhcIndobyBhcmUgeW91XCIpO1xufVxuXG5mb28oKTtcbiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSJ9'
 
   function getComment(src) {
-    var map = convert.fromSource(src);
-    return map ? map.toComment() : null;
+    var map = convert.fromSource(src)
+    return map ? map.toComment() : null
   }
 
   t.equal(getComment(foo), null, 'no comment returns null')
@@ -110,8 +105,8 @@ test('from source with a large source', function (t) {
   , otherMap = '//# sourceMappingURL=data:application/json;charset=utf-8;base64,otherZXJzaW9uIjozLCJmaWxlIjoiIiwic291cmNlcyI6WyJmdW5jdGlvbiBmb28oKSB7XG4gY29uc29sZS5sb2coXCJoZWxsbyBJIGFtIGZvb1wiKTtcbiBjb25zb2xlLmxvZyhcIndobyBhcmUgeW91XCIpO1xufVxuXG5mb28oKTtcbiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSJ9'
 
   function getComment(src) {
-    var map = convert.fromSource(src, true);
-    return map ? map.toComment() : null;
+    var map = convert.fromSource(src, true)
+    return map ? map.toComment() : null
   }
 
   t.equal(getComment(foo), null, 'no comment returns null')
@@ -147,15 +142,15 @@ test('remove comments', function (t) {
 test('remove map file comments', function (t) {
   var foo = [
       'function foo() {'
-    , ' console.log("hello I am foo");'
-    , ' console.log("who are you");'
+    , ' console.log("hello I am foo")'
+    , ' console.log("who are you")'
     , '}'
     , ''
-    , 'foo();'
+    , 'foo()'
     , ''
     ].join('\n')
   , fileMap1 = '//# sourceMappingURL=foo.js.map'
-  , fileMap2 = '/*# sourceMappingURL=foo.js.map */';
+  , fileMap2 = '/*# sourceMappingURL=foo.js.map */'
 
   t.equal(convert.removeMapFileComments(foo + fileMap1), foo, '// style filemap comment')
   t.equal(convert.removeMapFileComments(foo + fileMap2), foo, '/* */ style filemap comment')
@@ -164,7 +159,7 @@ test('remove map file comments', function (t) {
 
 test('pretty json', function (t) {
   var mod = convert.fromJSON(json).toJSON(2)
-    , expected = JSON.stringify(obj, null, 2);
+    , expected = JSON.stringify(obj, null, 2)
 
   t.equal(
       mod
@@ -178,13 +173,12 @@ test('adding properties', function (t) {
     .fromJSON(json)
     .addProperty('foo', 'bar')
     .toJSON()
-    , expected = JSON.parse(json);
-    expected.foo = 'bar';
+    , expected = JSON.parse(json)
+  expected.foo = 'bar'
   t.equal(
       mod
     , JSON.stringify(expected)
-    , 'includes added property'
-  )
+    , 'includes added property')
   t.end()
 })
 
@@ -193,7 +187,7 @@ test('adding properties, existing property', function (t) {
     convert
       .fromJSON(json)
       .addProperty('foo', 'bar')
-      .addProperty('foo', 'bar');
+      .addProperty('foo', 'bar')
   }
   catch(error) {
     t.equal(error.message, 'property "foo" already exists on the sourcemap, use set property instead', 'the error message includes the property name')
@@ -208,10 +202,10 @@ test('setting properties', function (t) {
     .setProperty('mappings', ';;;UACG')
     .setProperty('should add', 'this')
     .toJSON()
-    , expected = JSON.parse(json);
-    expected.version = '2';
-    expected.mappings = ';;;UACG';
-    expected['should add'] = 'this';
+    , expected = JSON.parse(json)
+  expected.version = '2'
+  expected.mappings = ';;;UACG'
+  expected['should add'] = 'this'
   t.equal(
       mod
     , JSON.stringify(expected)
@@ -230,7 +224,7 @@ test('getting properties', function (t) {
 
 test('return null fromSource when largeSource is true', function(t) {
   var mod = convert.fromSource('', true)
-    , expected = null;
+    , expected = null
 
   t.equal(
       mod
@@ -240,7 +234,7 @@ test('return null fromSource when largeSource is true', function(t) {
   t.end()
 })
 
-test('commentRegex returns new RegExp on each get', function(t) {
+test('getCommentRegex() returns new RegExp on each get', function(t) {
   var foo = [
       'function foo() {'
     , ' console.log("hello I am foo");'
@@ -251,17 +245,17 @@ test('commentRegex returns new RegExp on each get', function(t) {
     , ''
     ].join('\n')
   , map = '//# sourceMappingURL=data:application/json;charset=utf-8;base64,eyJ2ZXJzaW9uIjozLCJmaWxlIjoiIiwic291cmNlcyI6WyJmdW5jdGlvbiBmb28oKSB7XG4gY29uc29sZS5sb2coXCJoZWxsbyBJIGFtIGZvb1wiKTtcbiBjb25zb2xlLmxvZyhcIndobyBhcmUgeW91XCIpO1xufVxuXG5mb28oKTtcbiJdLCJuYW1lcyI6W10sIm1hcHBpbmdzIjoiQUFBQSJ9'
-  , re = convert.commentRegex
+  , re = convert.getCommentRegex()
 
   re.exec(foo + map)
 
   t.equal(re.lastIndex, 372, 'has an updated lastIndex')
-  t.equal(convert.commentRegex.lastIndex, 0, 'a fresh RegExp has lastIndex of 0')
+  t.equal(convert.getCommentRegex().lastIndex, 0, 'a fresh RegExp has lastIndex of 0')
 
   t.end()
 })
 
-test('mapFileCommentRegex returns new RegExp on each get', function(t) {
+test('getMapFileCommentRegex() returns new RegExp on each get', function(t) {
   var foo = [
       'function foo() {'
     , ' console.log("hello I am foo");'
@@ -272,12 +266,12 @@ test('mapFileCommentRegex returns new RegExp on each get', function(t) {
     , ''
     ].join('\n')
   , map = '//# sourceMappingURL=foo.js.map'
-  , re = convert.mapFileCommentRegex
+  , re = convert.getMapFileCommentRegex()
 
   re.exec(foo + map)
 
   t.equal(re.lastIndex, 119, 'has an updated lastIndex')
-  t.equal(convert.mapFileCommentRegex.lastIndex, 0, 'a fresh RegExp has lastIndex of 0')
+  t.equal(convert.getMapFileCommentRegex().lastIndex, 0, 'a fresh RegExp has lastIndex of 0')
 
   t.end()
 })

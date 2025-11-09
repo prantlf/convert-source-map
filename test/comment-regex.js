@@ -1,8 +1,6 @@
 'use strict';
-/*jshint asi: true */
 
 var test = require('tap').test
-  , generator = require('inline-source-map')
   , convert = require('..')
 
 function comment(prefix, suffix, rx) {
@@ -32,7 +30,7 @@ function commentURIWithoutMediaType(prefix, suffix, rx) {
 
 // Source Map v2 Tests
 test('comment regex old spec - @', function (t) {
-  [ 
+  [
     '//@ ',
     '  //@ ', // with leading space
     '\t//@ ', // with leading tab
@@ -41,32 +39,32 @@ test('comment regex old spec - @', function (t) {
     '  /*@ ', // multi line style with leading spaces
     '\t/*@ ', // multi line style with leading tab
     '/*@ ',   // multi line style with leading text
-  ].forEach(function (x) { 
-    t.ok(comment(x, '', convert.commentRegex), 'matches ' + x)
-    t.ok(comment(x, '', convert.commentRegex2), 'matches ' + x + ' (2)')
-    t.ok(commentURI(x, '', convert.commentRegex2), 'matches ' + x + ' uri')
-    t.ok(commentWithCharSet(x, '', undefined, convert.commentRegex), 'matches ' + x + ' with charset')
-    t.ok(commentWithCharSet(x, '', '=', convert.commentRegex), 'matches ' + x + ' with charset')
-    t.ok(commentWithCharSet(x, '', '=', convert.commentRegex2), 'matches ' + x + ' with charset (2)')
-    t.ok(commentURIWithCharSet(x, '', '=', convert.commentRegex2), 'matches ' + x + ' uri with charset')
-    t.ok(commentWithoutMediaType(x, '', convert.commentRegex2), 'matches ' + x + ' without media type (2)')
-    t.ok(commentURIWithoutMediaType(x, '', convert.commentRegex2), 'matches ' + x + ' uri without media type')
+  ].forEach(function (x) {
+    t.ok(comment(x, '', convert.getCommentRegex()), 'matches ' + x)
+    t.ok(comment(x, '', convert.getCommentRegex2()), 'matches ' + x + ' (2)')
+    t.ok(commentURI(x, '', convert.getCommentRegex2()), 'matches ' + x + ' uri')
+    t.ok(commentWithCharSet(x, '', undefined, convert.getCommentRegex()), 'matches ' + x + ' with charset')
+    t.ok(commentWithCharSet(x, '', '=', convert.getCommentRegex()), 'matches ' + x + ' with charset')
+    t.ok(commentWithCharSet(x, '', '=', convert.getCommentRegex2()), 'matches ' + x + ' with charset (2)')
+    t.ok(commentURIWithCharSet(x, '', '=', convert.getCommentRegex2()), 'matches ' + x + ' uri with charset')
+    t.ok(commentWithoutMediaType(x, '', convert.getCommentRegex2()), 'matches ' + x + ' without media type (2)')
+    t.ok(commentURIWithoutMediaType(x, '', convert.getCommentRegex2()), 'matches ' + x + ' uri without media type')
   });
 
   [
     ' @// @',
     ' @/* @',
   ].forEach(function (x) {
-    t.ok(!comment(x, '', convert.commentRegex), 'should not match ' + x)
-    t.ok(!comment(x, '', convert.commentRegex2), 'should not match ' + x + ' (2)')
-    t.ok(!commentURI(x, '', convert.commentRegex2), 'should not match ' + x + ' uri')
+    t.ok(!comment(x, '', convert.getCommentRegex()), 'should not match ' + x)
+    t.ok(!comment(x, '', convert.getCommentRegex2()), 'should not match ' + x + ' (2)')
+    t.ok(!commentURI(x, '', convert.getCommentRegex2()), 'should not match ' + x + ' uri')
   })
 
   t.end()
 })
 
 test('comment regex new spec - #', function (t) {
-  [ 
+  [
     '  //# ', // with leading spaces
     '\t//# ', // with leading tab
     '//# ',   // with leading text
@@ -74,32 +72,32 @@ test('comment regex new spec - #', function (t) {
     '  /*# ', // multi line style with leading spaces
     '\t/*# ', // multi line style with leading tab
     '/*# ',   // multi line style with leading text
-  ].forEach(function (x) { 
-    t.ok(comment(x, '', convert.commentRegex), 'matches ' + x)
-    t.ok(comment(x, '', convert.commentRegex2), 'matches ' + x + ' (2)')
-    t.ok(commentURI(x, '', convert.commentRegex2), 'matches ' + x + ' uri')
-    t.ok(commentWithCharSet(x, '', undefined, convert.commentRegex), 'matches ' + x + ' with charset')
-    t.ok(commentWithCharSet(x, '', '=', convert.commentRegex), 'matches ' + x + ' with charset')
-    t.ok(commentWithCharSet(x, '', '=', convert.commentRegex2), 'matches ' + x + ' with charset (2)')
-    t.ok(commentURIWithCharSet(x, '', '=', convert.commentRegex2), 'matches ' + x + ' uri with charset')
-    t.ok(commentWithoutMediaType(x, '', convert.commentRegex2), 'matches ' + x + ' without media type (2)')
-    t.ok(commentURIWithoutMediaType(x, '', convert.commentRegex2), 'matches ' + x + ' uri without media type')
+  ].forEach(function (x) {
+    t.ok(comment(x, '', convert.getCommentRegex()), 'matches ' + x)
+    t.ok(comment(x, '', convert.getCommentRegex2()), 'matches ' + x + ' (2)')
+    t.ok(commentURI(x, '', convert.getCommentRegex2()), 'matches ' + x + ' uri')
+    t.ok(commentWithCharSet(x, '', undefined, convert.getCommentRegex()), 'matches ' + x + ' with charset')
+    t.ok(commentWithCharSet(x, '', '=', convert.getCommentRegex()), 'matches ' + x + ' with charset')
+    t.ok(commentWithCharSet(x, '', '=', convert.getCommentRegex2()), 'matches ' + x + ' with charset (2)')
+    t.ok(commentURIWithCharSet(x, '', '=', convert.getCommentRegex2()), 'matches ' + x + ' uri with charset')
+    t.ok(commentWithoutMediaType(x, '', convert.getCommentRegex2()), 'matches ' + x + ' without media type (2)')
+    t.ok(commentURIWithoutMediaType(x, '', convert.getCommentRegex2()), 'matches ' + x + ' uri without media type')
   });
-  
-  [ 
+
+  [
     ' #// #',
     ' #/* #',
   ].forEach(function (x) {
-    t.ok(!comment(x, '', convert.commentRegex), 'should not match ' + x)
-    t.ok(!comment(x, '', convert.commentRegex2), 'should not match ' + x + ' (2)')
-    t.ok(!commentURI(x, '', convert.commentRegex2), 'should not match ' + x + ' uri')
+    t.ok(!comment(x, '', convert.getCommentRegex()), 'should not match ' + x)
+    t.ok(!comment(x, '', convert.getCommentRegex2()), 'should not match ' + x + ' (2)')
+    t.ok(!commentURI(x, '', convert.getCommentRegex2()), 'should not match ' + x + ' uri')
   })
 
   t.end()
 })
 
 test('comment regex groups', function (t) {
-  [ 
+  [
     '  //# ', // with leading spaces
     '\t//# ', // with leading tab
     '//# ',   // with leading text
@@ -109,7 +107,7 @@ test('comment regex groups', function (t) {
     '/*# ',   // multi line style with leading text
   ].forEach(function (x) {
     var m;
-    m = comment(x, '', convert.commentRegex3)
+    m = comment(x, '', convert.getCommentRegex3())
     t.ok(m, 'matches ' + x)
     t.ok(m[0], 'comment')
     t.equal(m[1], 'application/json', 'media type')
@@ -117,7 +115,7 @@ test('comment regex groups', function (t) {
     t.equal(m[3], undefined, 'undefined charset')
     t.equal(m[4], 'base64', 'base64 encoding')
     t.ok(m[5], 'data')
-    m = commentURI(x, '', convert.commentRegex3)
+    m = commentURI(x, '', convert.getCommentRegex3())
     t.ok(m, 'matches ' + x + ' uri')
     t.ok(m[0], 'comment uri')
     t.equal(m[1], 'application/json', 'media type uri')
@@ -125,7 +123,7 @@ test('comment regex groups', function (t) {
     t.equal(m[3], undefined, 'undefined charset uri')
     t.equal(m[4], undefined, 'undefined encoding uri')
     t.ok(m[5], 'data uri')
-    m = commentWithCharSet(x, '', '=', convert.commentRegex3)
+    m = commentWithCharSet(x, '', '=', convert.getCommentRegex3())
     t.ok(m, 'matches ' + x + ' with charset')
     t.ok(m[0], 'comment with charset')
     t.equal(m[1], 'application/json;charset=utf-8', 'media type with charset')
@@ -133,7 +131,7 @@ test('comment regex groups', function (t) {
     t.equal(m[3], 'utf-8', 'charset with utf-8')
     t.equal(m[4], 'base64', 'base64 encoding with charset')
     t.ok(m[5], 'data with charset')
-    m = commentURIWithCharSet(x, '', '=', convert.commentRegex3)
+    m = commentURIWithCharSet(x, '', '=', convert.getCommentRegex3())
     t.ok(m, 'matches ' + x + ' uri with charset')
     t.ok(m[0], 'comment uri with charset')
     t.equal(m[1], 'application/json;charset=utf-8', 'media type uri with charset')
@@ -141,7 +139,7 @@ test('comment regex groups', function (t) {
     t.equal(m[3], 'utf-8', 'charset uri with utf-8')
     t.equal(m[4], undefined, 'undefined encoding uri with charset')
     t.ok(m[5], 'data with charset')
-    m = commentWithoutMediaType(x, '', convert.commentRegex3)
+    m = commentWithoutMediaType(x, '', convert.getCommentRegex3())
     t.ok(m, 'matches ' + x + ' without media type')
     t.ok(m[0], 'comment without media type')
     t.equal(m[1], undefined, 'undefined media type')
@@ -149,7 +147,7 @@ test('comment regex groups', function (t) {
     t.equal(m[3], undefined, 'undefined charset without media type')
     t.equal(m[4], 'base64', 'base64 encoding without media type')
     t.ok(m[5], 'data without media type')
-    m = commentURIWithoutMediaType(x, '', convert.commentRegex3)
+    m = commentURIWithoutMediaType(x, '', convert.getCommentRegex3())
     t.ok(m, 'matches ' + x + ' uri without media type')
     t.ok(m[0], 'comment uri without media type')
     t.equal(m[1], undefined, 'undefined media type')
@@ -158,27 +156,27 @@ test('comment regex groups', function (t) {
     t.equal(m[4], undefined, 'undefined encoding uri without media type')
     t.ok(m[5], 'data uri without media type')
   });
-  
-  [ 
+
+  [
     ' #// #',
     ' #/* #',
   ].forEach(function (x) {
-    t.ok(!comment(x, '', convert.commentRegex), 'should not match ' + x)
-    t.ok(!comment(x, '', convert.commentRegex2), 'should not match ' + x + ' (2)')
-    t.ok(!commentURI(x, '', convert.commentRegex2), 'should not match ' + x + ' uri')
+    t.ok(!comment(x, '', convert.getCommentRegex()), 'should not match ' + x)
+    t.ok(!comment(x, '', convert.getCommentRegex2()), 'should not match ' + x + ' (2)')
+    t.ok(!commentURI(x, '', convert.getCommentRegex2()), 'should not match ' + x + ' uri')
   })
 
   t.end()
 })
 
 function mapFileCommentWrap(s1, s2) {
-  var mapFileRx = convert.mapFileCommentRegex;
+  var mapFileRx = convert.getMapFileCommentRegex();
   return mapFileRx.test(s1 + 'sourceMappingURL=foo.js.map' + s2)
 }
 
 test('mapFileComment regex old spec - @', function (t) {
 
-  [ 
+  [
     ['//@ ', ''],
     ['  //@ ', ''],                 // with leading spaces
     ['\t//@ ', ''],                 // with a leading tab
@@ -187,7 +185,7 @@ test('mapFileComment regex old spec - @', function (t) {
     ['return//@ ', ''],             // with a leading text
   ].forEach(function (x) { t.ok(mapFileCommentWrap(x[0], x[1]), 'matches ' + x.join(' :: ')) });
 
-  [ 
+  [
     [' @// @', ''],
     ['var sm = `//@ ', '`'],        // not inside a string
     ['var sm = "//@ ', '"'],        // not inside a string
@@ -198,7 +196,7 @@ test('mapFileComment regex old spec - @', function (t) {
 })
 
 test('mapFileComment regex new spec - #', function (t) {
-  [ 
+  [
     ['//# ', ''],
     ['  //# ', ''],                 // with leading space
     ['\t//# ', ''],                 // with leading tab
@@ -207,7 +205,7 @@ test('mapFileComment regex new spec - #', function (t) {
     ['return//# ', ''],             // with leading text
   ].forEach(function (x) { t.ok(mapFileCommentWrap(x[0], x[1]), 'matches ' + x.join(' :: ')) });
 
-  [ 
+  [
     [' #// #', ''],
     ['var sm = `//# ', '`'],        // not inside a string
     ['var sm = "//# ', '"'],        // not inside a string
@@ -225,8 +223,8 @@ test('mapFileComment regex /* */ old spec - @', function (t) {
   , [ '/*@ ', ' \t*/\t ']           // with trailing whitespace
   ].forEach(function (x) { t.ok(mapFileCommentWrap(x[0], x[1]), 'matches ' + x.join(' :: ')) });
 
-  [ ['/*@ ', ' */ */ ' ],       // not the last thing on its line 
-    ['/*@ ', ' */ more text ' ] // not the last thing on its line 
+  [ ['/*@ ', ' */ */ ' ],       // not the last thing on its line
+    ['/*@ ', ' */ more text ' ] // not the last thing on its line
   ].forEach(function (x) { t.ok(!mapFileCommentWrap(x[0], x[1]), 'does not match ' + x.join(' :: ')) });
   t.end()
 })
@@ -239,8 +237,8 @@ test('mapFileComment regex /* */ new spec - #', function (t) {
   , [ '/*# ', ' \t*/\t ']           // with trailing whitespace
   ].forEach(function (x) { t.ok(mapFileCommentWrap(x[0], x[1]), 'matches ' + x.join(' :: ')) });
 
-  [ ['/*# ', ' */ */ ' ],       // not the last thing on its line 
-    ['/*# ', ' */ more text ' ] // not the last thing on its line 
+  [ ['/*# ', ' */ */ ' ],       // not the last thing on its line
+    ['/*# ', ' */ more text ' ] // not the last thing on its line
   ].forEach(function (x) { t.ok(!mapFileCommentWrap(x[0], x[1]), 'does not match ' + x.join(' :: ')) });
   t.end()
 })

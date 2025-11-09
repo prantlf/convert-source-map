@@ -1,8 +1,6 @@
 'use strict';
-/*jshint asi: true */
 
 var test = require('tap').test
-  , rx = require('..')
   , fs = require('fs')
   , convert = require('..')
 
